@@ -26,5 +26,3 @@ services:
     container_name: sales-api
     ports:
       - 8082:8082 
-    depends_on:
-      - sales-rabbit
