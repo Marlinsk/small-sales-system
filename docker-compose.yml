@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  sales-rabbit:
+    image: rabbitmq:3.12-management
+    container_name: sales-rabbit
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672 
+
+  auth-api:
+    image: ./auth-backend-application
+    container_name: auth-api
+    ports:
+      - 8080:8080
+
+  product-api:
+    image: ./product-backend-application
+    container_name: product-api
+    ports:
+      - 8081:8081
+
+  sales-api:
+    image: ./sales-backend-application
+    container_name: sales-api
+    ports:
+      - 8082:8082 
+    depends_on:
+      - sales-rabbit
