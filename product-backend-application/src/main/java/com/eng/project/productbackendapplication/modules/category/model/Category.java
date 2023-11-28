@@ -1,6 +1,6 @@
-package com.eng.project.productbackendapplication.modules.product.model;
+package com.eng.project.productbackendapplication.modules.category.model;
 
-import com.eng.project.productbackendapplication.modules.product.dto.CategoryRequest;
+import com.eng.project.productbackendapplication.modules.category.dto.CategoryRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,16 +24,6 @@ public class Category {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Date createdAt;
-
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
 
     public static Category of(CategoryRequest request) {
         var category = new Category();

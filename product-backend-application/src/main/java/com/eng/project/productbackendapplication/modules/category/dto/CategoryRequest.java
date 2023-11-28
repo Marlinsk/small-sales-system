@@ -1,4 +1,4 @@
-package com.eng.project.productbackendapplication.modules.product.dto;
+package com.eng.project.productbackendapplication.modules.category.dto;
 
 import lombok.Data;
 

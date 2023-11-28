@@ -1,6 +1,6 @@
-package com.eng.project.productbackendapplication.modules.product.dto;
+package com.eng.project.productbackendapplication.modules.category.dto;
 
-import com.eng.project.productbackendapplication.modules.product.model.Category;
+import com.eng.project.productbackendapplication.modules.category.model.Category;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -11,10 +11,6 @@ public class CategoryResponse {
 
     private Integer id;
     private String description;
-
-    private Date createdAt;
-
-    private Date updatedAt;
 
     public static CategoryResponse of(Category category) {
         var response = new CategoryResponse();
