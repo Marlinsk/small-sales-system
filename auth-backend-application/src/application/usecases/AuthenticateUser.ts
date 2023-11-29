@@ -48,7 +48,9 @@ export default class AuthenticateUser {
       );
     }
 
-    const accesstoken = sign({ id: user.id, name: user.name, email: user.email }, API_SECRET, {
+    const authUser = { id: user.id, name: user.name, email: user.email };
+
+    const accesstoken = sign({ authUser }, API_SECRET, {
       subject: String(user.id),
       expiresIn: "1d",
     });
