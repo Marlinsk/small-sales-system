@@ -12,11 +12,6 @@ import * as httpStatus from "../../shared/constants/https-status";
 type Response = {
   status: number;
   token: string;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-  }
 }
 
 @injectable()
@@ -53,19 +48,14 @@ export default class AuthenticateUser {
       );
     }
 
-    const accesstoken = sign({}, API_SECRET, {
+    const accesstoken = sign({ id: user.id, name: user.name, email: user.email }, API_SECRET, {
       subject: String(user.id),
       expiresIn: "1d",
     });
 
     return { 
       status: httpStatus.SUCCESS,
-      token: accesstoken,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      }
+      token: accesstoken
     }
   }
 }

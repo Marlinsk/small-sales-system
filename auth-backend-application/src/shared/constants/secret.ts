@@ -1,1 +1,1 @@
-export const API_SECRET = process.env.JWT_SECRET;
+export const API_SECRET = process.env.JWT_SECRET ? process.env.JWT_SECRET : "MjgxMDExZTYtNWQ4OS00NWI5LTg0OGMtYjVhZTI0OWIzYmM2";
