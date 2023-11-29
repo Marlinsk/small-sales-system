@@ -26,3 +26,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+app-config:
+  secrets:
+    api-secret: ${API_SECRET:MjgxMDExZTYtNWQ4OS00NWI5LTg0OGMtYjVhZTI0OWIzYmM2}
