@@ -3,12 +3,10 @@ package com.eng.project.productbackendapplication.modules.product.services;
 import com.eng.project.productbackendapplication.config.exception.SuccessResponse;
 import com.eng.project.productbackendapplication.config.exception.ValidationException;
 import com.eng.project.productbackendapplication.modules.category.services.CategoryService;
-import com.eng.project.productbackendapplication.modules.product.dto.ProductQuantityDTO;
-import com.eng.project.productbackendapplication.modules.product.dto.ProductRequest;
-import com.eng.project.productbackendapplication.modules.product.dto.ProductResponse;
-import com.eng.project.productbackendapplication.modules.product.dto.ProductStockDTO;
+import com.eng.project.productbackendapplication.modules.product.dto.*;
 import com.eng.project.productbackendapplication.modules.product.model.Product;
 import com.eng.project.productbackendapplication.modules.product.repository.ProductRepository;
+import com.eng.project.productbackendapplication.modules.sales.client.SalesClient;
 import com.eng.project.productbackendapplication.modules.sales.dto.SalesConfirmationDTO;
 import com.eng.project.productbackendapplication.modules.sales.enums.SalesStatus;
 import com.eng.project.productbackendapplication.modules.sales.rabbitmq.SalesConfirmationSender;
@@ -38,6 +36,8 @@ public class ProductService {
     private CategoryService categoryService;
     @Autowired
     private SalesConfirmationSender salesConfirmationSender;
+    @Autowired
+    private SalesClient salesClient;
 
     public List<ProductResponse> findByAll() {
         return productRepository
@@ -195,6 +195,35 @@ public class ProductService {
     private void validateQuantityInStock(ProductQuantityDTO salesProduct, Product existingProduct) {
         if (salesProduct.getQuantity() > existingProduct.getQuantityAvailable()) {
             throw new ValidationException(String.format("The product %s is out for stock.", existingProduct.getId()));
+        }
+    }
+
+    public ProductSalesResponse findProductSales(Integer id) {
+        var product = findById(id);
+        try {
+            var sales = salesClient.findSalesByProductId(product.getId())
+                    .orElseThrow(() -> new ValidationException("The sales was not found by this product."));
+            return ProductSalesResponse.of(product, sales.getSalesId());
+        } catch (Exception exception) {
+            throw new ValidationException("There was an error trying to get the product's sales.");
+        }
+    }
+
+    public SuccessResponse checkProductStock(ProductCheckStockRequest request) {
+        if (isEmpty(request) || isEmpty(request.getProducts())) {
+            throw new ValidationException("The request data and products must be informed.");
+        }
+        request.getProducts().forEach(this::validateStock);
+        return SuccessResponse.create("The stock is ok!");
+    }
+
+    private void validateStock(ProductQuantityDTO productQuantity) {
+        if (isEmpty(productQuantity.getProductId()) || isEmpty(productQuantity.getQuantity())) {
+            throw new ValidationException("Product ID and quantity must be informed.");
+        }
+        var product = findById(productQuantity.getProductId());
+        if (productQuantity.getQuantity() > product.getQuantityAvailable()) {
+            throw new ValidationException(String.format("The product %s is out of stock.", product.getId()));
         }
     }
 }
