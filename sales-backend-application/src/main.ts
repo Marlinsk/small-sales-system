@@ -1,15 +1,19 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-import { connect } from './shared/database/VerifyConnectionDB';
+import { connectMongodb } from './shared/config/database/VerifyConnectionDB';
+import checkToken from './shared/config/auth/CheckToken';
+import { connectRabbitMq } from './shared/config/rabbitmq/rabbitConfig';
 
 const app = express();
 
-connect();
+connectMongodb();
+connectRabbitMq();
 
 app.use(cors());
 app.use(express.json());
 
+app.use(checkToken);
 
 app.get("/api/status", (request, response) => {
   return response.status(200).json({

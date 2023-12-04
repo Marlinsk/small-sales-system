@@ -1,7 +1,7 @@
 import "dotenv/config"
 import mongoose from "mongoose";
 
-export function connect() {
+export function connectMongodb() {
   mongoose.connect(String(process.env.DATABASE_URL));
   
   mongoose.connection.on("connected", function () {

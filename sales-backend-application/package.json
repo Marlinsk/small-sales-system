@@ -5,14 +5,14 @@
   "main": "main.js",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main.ts",
+    "dev": "set NODE_ENV=container&&ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main.ts",
     "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "Marlinsk",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.6.0",
+    "amqplib": "^0.10.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -30,11 +30,11 @@
     "@babel/plugin-proposal-decorators": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@types/amqplib": "^0.10.4",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
-    "prisma": "^5.6.0",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.2"
