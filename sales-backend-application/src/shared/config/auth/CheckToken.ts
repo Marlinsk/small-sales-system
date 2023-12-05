@@ -1,5 +1,5 @@
 import "dotenv/config";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
 import Exception from "../../exceptions/Exception";
@@ -32,10 +32,13 @@ export default async function checkToken(
         httpStatus.INTERNAL_SERVER_ERROR
       );
     }
-    const decoded = jwt.verify(token, API_SECRET);
+    
+    const decoded = jwt.verify(token, API_SECRET) as JwtPayload & { sub: string, name: string, email: string };
 
     request.user = {
       id: String(decoded.sub),
+      name: decoded.name,
+      email: decoded.email
     } 
     
     return next();  

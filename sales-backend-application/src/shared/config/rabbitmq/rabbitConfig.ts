@@ -1,6 +1,6 @@
 import amqp, { Channel, Connection } from "amqplib/callback_api";
 
-import { listenToSalesConfirmationQueue } from "../../../modules/sales/infra/rabbitmq/SalesConfirmationListener";
+import { listenToSalesConfirmationQueue } from "../../../modules/sales/rabbitmq/SalesConfirmationListener";
 
 import { 
   PRODUCT_STOCK_UPDATE_QUEUE, 
