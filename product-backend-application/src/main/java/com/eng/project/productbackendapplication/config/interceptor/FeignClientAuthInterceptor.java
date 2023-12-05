@@ -4,9 +4,11 @@ import com.eng.project.productbackendapplication.config.exception.ValidationExce
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+@Component
 public class FeignClientAuthInterceptor implements RequestInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";
