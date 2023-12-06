@@ -32,7 +32,7 @@ class OrderService {
         status: PENDING,
       };
       await this.validateProductStock(order, request.token);
-      const newOrder = await OrderRepository.save(order);
+      const newOrder = await OrderRepository.create(order);
       this.sendMessage(newOrder);
       return {
         status: httpStatus.SUCCESS,
@@ -83,6 +83,7 @@ class OrderService {
     const order: { salesId: string; status: string } = JSON.parse(
       String(orderMessage)
     );
+    console.log(order);
     try {
       if (order.salesId && order.status) {
         let existingOrder = await OrderRepository.findById(order.salesId);
