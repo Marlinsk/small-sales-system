@@ -7,9 +7,7 @@ import Exception from "../../../../shared/exceptions/Exception";
 import * as httpStatus from "../../../../shared/constants/https-status";
 
 class OrderRepository {
-  async save(
-    data: Order | { products: Array<Products>; user: User; status: string }
-  ): Promise<Order> {
+  async create(data: { products: Array<Products>; user: User; status: string }): Promise<Order> {
     try {
       const order = await OrderSchema.create(data);
       return new Order(
@@ -20,6 +18,23 @@ class OrderRepository {
         order.createdAt,
         order.updatedAt
       );
+    } catch (error: any) {
+      console.log(error.message);
+      return error;
+    }
+  }
+
+  async save(data: Order): Promise<any> {
+    try {
+      const updatedOrder = await OrderSchema.findByIdAndUpdate(
+        data._id, { status: data.status }, { new: true }
+      );
+      if (!updatedOrder) {
+        return new Exception(
+          "The order was not found.", 
+          httpStatus.INTERNAL_SERVER_ERROR
+        ); 
+      }
     } catch (error: any) {
       console.log(error.message);
       return error;
