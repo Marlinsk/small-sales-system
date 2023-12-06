@@ -69,4 +69,26 @@ export default class MongodbRepository implements OrderRepository {
       return null;
     }
   }
+
+  async findByProductId(productId: string): Promise<Order[]> {
+    try {
+      const orders = await OrderSchema.find({ 
+        "products.productId": Number(productId), 
+      });
+      const output = orders.map((data) => {
+        return new Order(
+          String(data._id),
+          data.products,
+          data.user,
+          data.status,
+          data.createdAt,
+          data.updatedAt
+        );
+      });
+      return output;
+    } catch (error: any) {
+      console.log(error.message);
+      return [];
+    }
+  }
 }

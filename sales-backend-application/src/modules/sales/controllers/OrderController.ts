@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import * as httpStatus from "../../../shared/constants/https-status";
-import OrderService from "../services/OrderService";
 import { Products } from "../entities/Products";
+
+import OrderService from "../services/OrderService";
+
+import * as httpStatus from "../../../shared/constants/https-status";
 
 export class OrderController {
   async createOrder(request: Request, response: Response): Promise<Response> {
@@ -30,6 +32,33 @@ export class OrderController {
       const { id } = request.params;
       const service = container.resolve(OrderService);
       const output = await service.findById(id);
+      return response.status(output.status).json(output);
+    } catch (error: any) {
+      return response.json({
+        status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      });
+    }
+  }
+
+  async findAll(request: Request, response: Response): Promise<Response> {
+    try {
+      const service = container.resolve(OrderService);
+      const output = await service.findAll();
+      return response.status(output.status).json(output);
+    } catch (error: any) {
+      return response.json({
+        status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      });
+    }
+  }
+
+  async findByProductId(request: Request, response: Response): Promise<Response> {
+    try {
+      const { productId } = request.params;
+      const service = container.resolve(OrderService);
+      const output = await service.findByProductId(productId);
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({

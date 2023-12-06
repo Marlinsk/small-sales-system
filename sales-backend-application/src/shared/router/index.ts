@@ -3,6 +3,6 @@ import orderRouter from "../../modules/sales/routes/order.routes";
 
 const routes = Router();
 
-routes.use('/api/order', orderRouter);
+routes.use('/api', orderRouter);
 
 export default routes;

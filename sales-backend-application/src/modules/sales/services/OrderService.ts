@@ -22,18 +22,15 @@ export default class OrderService {
     products: Array<Products>;
     user: User;
     token: string;
-  }): Promise<
-    | {
-        status: number;
-        order: Order;
-        message?: undefined;
-      }
-    | {
-        status: any;
-        message: any;
-        order?: undefined;
-      }
-  > {
+  }): Promise<{ 
+    status: number; 
+    order: Order; 
+    message?: undefined; 
+  } | { 
+    status: any; 
+    message: any; 
+    order?: undefined; 
+  }> {
     try {
       this.validateOrderData(request);
       const order = {
@@ -109,26 +106,23 @@ export default class OrderService {
     }
   }
 
-  async findById(id: string): Promise<
-    | {
-        status: number;
-        order: Order;
-        message?: undefined;
-      }
-    | {
-        status: any;
-        message: any;
-        order?: undefined;
-      }
-  > {
+  async findById(id: string): Promise<{
+    status: number;
+    order: Order;
+    message?: undefined;
+  } | {
+    status: any;
+    message: any;
+    order?: undefined;
+  }> {
     try {
       this.validateInformedId(id);
       const existingOrder = await this.orderRepository.findById(id);
       if (!existingOrder) {
         throw new Exception(
-          "The order was not found.",
+          "The order was not found.", 
           httpStatus.NOT_FOUND
-        )
+        );
       }
       return {
         status: httpStatus.SUCCESS,
@@ -148,6 +142,71 @@ export default class OrderService {
         "The order ID must be informed.",
         httpStatus.BAD_REQUEST
       );
+    }
+  }
+
+  
+  async findByProductId(productId: string): Promise<{
+    status: number;
+    salesIds: string[];
+    message?: undefined;
+  } | {
+    status: any;
+    message: any;
+    salesIds?: undefined;
+  }> {
+    try {
+      this.validateInformedProductId(productId);
+      const orders = await this.orderRepository.findByProductId(productId);
+      if (!orders) {
+        throw new Exception(
+          "The orders was not found.", 
+          httpStatus.NOT_FOUND
+        );
+      }
+      return {
+        status: httpStatus.SUCCESS,
+        salesIds: orders.map((order) => {
+          return order._id;
+        }),
+      };
+    } catch (error: any) {
+      return {
+        status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      };
+    }
+  }
+
+  validateInformedProductId(productId: string): void {
+    if (!productId) {
+      throw new Exception(
+        "The order's productId must be informed.",
+        httpStatus.BAD_REQUEST
+      );
+    }
+  }
+
+  async findAll(): Promise<{
+    status: number;
+    orders: Order[];
+    message?: undefined;
+  } | {
+    status: any;
+    message: any;
+    orders?: undefined;
+  }> {
+    try {
+      const orders = await this.orderRepository.findAll();
+      return {
+        status: httpStatus.SUCCESS,
+        orders,
+      };
+    } catch (error: any) {
+      return {
+        status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      };
     }
   }
 }
