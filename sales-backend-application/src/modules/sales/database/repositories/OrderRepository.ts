@@ -5,19 +5,13 @@ import OrderSchema from "../model/OrderSchema";
 import Exception from "../../../../shared/exceptions/Exception";
 
 import * as httpStatus from "../../../../shared/constants/https-status";
+import { DatabaseOutputMapper } from "../mappers/DatabaseOutputMapper";
 
 class OrderRepository {
   async create(data: { products: Array<Products>; user: User; status: string }): Promise<Order> {
     try {
       const order = await OrderSchema.create(data);
-      return new Order(
-        String(order._id),
-        order.products,
-        order.user,
-        order.status,
-        order.createdAt,
-        order.updatedAt
-      );
+      return DatabaseOutputMapper.toOrder(order);
     } catch (error: any) {
       console.log(error.message);
       return error;
@@ -44,16 +38,7 @@ class OrderRepository {
   async findAll(): Promise<Order[]> {
     try {
       const orders = await OrderSchema.find();
-      const output = orders.map((data) => {
-        return new Order(
-          String(data._id),
-          data.products,
-          data.user,
-          data.status,
-          data.createdAt,
-          data.updatedAt
-        );
-      });
+      const output = orders.map((data) => DatabaseOutputMapper.toOrder(data));
       return output;
     } catch (error: any) {
       console.log(error.message);
@@ -70,14 +55,7 @@ class OrderRepository {
           httpStatus.INTERNAL_SERVER_ERROR
         );
       }
-      return new Order(
-        String(order._id),
-        order.products,
-        order.user,
-        order.status,
-        order.createdAt,
-        order.updatedAt
-      );
+      return DatabaseOutputMapper.toOrder(order);
     } catch (error: any) {
       console.log(error.message);
       return null;
