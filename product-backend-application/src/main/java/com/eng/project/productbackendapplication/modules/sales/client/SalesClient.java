@@ -10,6 +10,6 @@ import java.util.Optional;
 @FeignClient(name = "salesClient", contextId = "salesClient", url = "${app-config.services.sales}")
 public interface SalesClient {
 
-    @GetMapping("/api/order/orders/product/{productId}")
+    @GetMapping("/api/orders/product/{productId}")
     Optional<SalesProductResponse> findSalesByProductId(@PathVariable Integer productId);
 }
