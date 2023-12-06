@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { container } from "tsyringe";
 
 import { Products } from "../entities/Products";
 
@@ -7,13 +6,12 @@ import OrderService from "../services/OrderService";
 
 import * as httpStatus from "../../../shared/constants/https-status";
 
-export class OrderController {
+class OrderController {
   async createOrder(request: Request, response: Response): Promise<Response> {
     try {
       const { authorization } = request.headers;
       const { products }: { products: Array<Products> } = request.body;
-      const service = container.resolve(OrderService);
-      const output = await service.createOrder({
+      const output = await OrderService.createOrder({
         products: products,
         user: request.user,
         token: String(authorization),
@@ -30,8 +28,7 @@ export class OrderController {
   async findById(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
-      const service = container.resolve(OrderService);
-      const output = await service.findById(id);
+      const output = await OrderService.findById(id);
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
@@ -43,8 +40,7 @@ export class OrderController {
 
   async findAll(request: Request, response: Response): Promise<Response> {
     try {
-      const service = container.resolve(OrderService);
-      const output = await service.findAll();
+      const output = await OrderService.findAll();
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
@@ -57,8 +53,7 @@ export class OrderController {
   async findByProductId(request: Request, response: Response): Promise<Response> {
     try {
       const { productId } = request.params;
-      const service = container.resolve(OrderService);
-      const output = await service.findByProductId(productId);
+      const output = await OrderService.findByProductId(productId);
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
@@ -68,3 +63,5 @@ export class OrderController {
     }
   }
 }
+
+export default new OrderController();

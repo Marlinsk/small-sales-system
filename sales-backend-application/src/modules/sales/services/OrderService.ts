@@ -1,23 +1,16 @@
-import { injectable, inject } from "tsyringe";
-
+import { User } from "../entities/User";
 import { Order } from "../entities/Order";
 import { Products } from "../entities/Products";
-import { sendMessageToProductStockUpdateQueue } from "../../product/rabbitmq/ProductStockUpdateSender";
 import { PENDING } from "../constants/order-status";
+import { sendMessageToProductStockUpdateQueue } from "../../product/rabbitmq/ProductStockUpdateSender";
 
 import Exception from "../../../shared/exceptions/Exception";
-import OrderRepository from "../interfaces/OrderRepository";
 import ProductClient from "../../product/client/ProductClient";
+import OrderRepository from "../database/repositories/OrderRepository";
 
 import * as httpStatus from "../../../shared/constants/https-status";
 
-@injectable()
-export default class OrderService {
-  constructor(
-    @inject("OrderRepository")
-    private readonly orderRepository: OrderRepository
-  ) {}
-
+class OrderService {
   async createOrder(request: {
     products: Array<Products>;
     user: User;
@@ -39,7 +32,7 @@ export default class OrderService {
         status: PENDING,
       };
       await this.validateProductStock(order, request.token);
-      const newOrder = await this.orderRepository.save(order);
+      const newOrder = await OrderRepository.save(order);
       this.sendMessage(newOrder);
       return {
         status: httpStatus.SUCCESS,
@@ -92,10 +85,10 @@ export default class OrderService {
     );
     try {
       if (order.salesId && order.status) {
-        let existingOrder = await this.orderRepository.findById(order.salesId);
+        let existingOrder = await OrderRepository.findById(order.salesId);
         if (existingOrder && order.status !== existingOrder.status) {
           existingOrder.status = order.status;
-          await this.orderRepository.save(existingOrder);
+          await OrderRepository.save(existingOrder);
         }
       } else {
         console.warn("The order message was not complete.");
@@ -117,7 +110,7 @@ export default class OrderService {
   }> {
     try {
       this.validateInformedId(id);
-      const existingOrder = await this.orderRepository.findById(id);
+      const existingOrder = await OrderRepository.findById(id);
       if (!existingOrder) {
         throw new Exception(
           "The order was not found.", 
@@ -157,7 +150,7 @@ export default class OrderService {
   }> {
     try {
       this.validateInformedProductId(productId);
-      const orders = await this.orderRepository.findByProductId(productId);
+      const orders = await OrderRepository.findByProductId(productId);
       if (!orders) {
         throw new Exception(
           "The orders was not found.", 
@@ -166,9 +159,7 @@ export default class OrderService {
       }
       return {
         status: httpStatus.SUCCESS,
-        salesIds: orders.map((order) => {
-          return order._id;
-        }),
+        salesIds: orders
       };
     } catch (error: any) {
       return {
@@ -197,7 +188,7 @@ export default class OrderService {
     orders?: undefined;
   }> {
     try {
-      const orders = await this.orderRepository.findAll();
+      const orders = await OrderRepository.findAll();
       return {
         status: httpStatus.SUCCESS,
         orders,
@@ -210,3 +201,5 @@ export default class OrderService {
     }
   }
 }
+
+export default new OrderService();

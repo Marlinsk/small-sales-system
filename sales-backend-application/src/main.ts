@@ -1,10 +1,10 @@
-import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
+
 import { connectMongodb } from './shared/config/database/VerifyConnectionDB';
-import checkToken from './shared/config/auth/CheckToken';
 import { connectRabbitMq } from './shared/config/rabbitmq/rabbitConfig';
-import routes from './shared/router';
+import router from './modules/sales/routes';
+import checkToken from './shared/config/auth/CheckToken';
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(checkToken);
 
-app.use(routes);
+app.use(router);
 
 app.get("/api/status", (request, response) => {
   return response.status(200).json({
