@@ -4,10 +4,13 @@ services:
   sales-rabbit:
     image: rabbitmq:3.12-management
     container_name: sales-rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     ports:
       - 5672:5672
       - 25676:25676
-      - 15672:15672 
+      - 15672:15672
 
   auth-api:
     image: ./auth-backend-application
