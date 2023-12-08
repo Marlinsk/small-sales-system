@@ -2,10 +2,10 @@ import "dotenv/config";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-import Exception from "../../exceptions/Exception";
+import Exception from "../../../exceptions/Exception";
 
-import * as secret from "../../constants/secret";
-import * as httpStatus from "../../constants/https-status";
+import * as secret from "../../../constants/secret";
+import * as httpStatus from "../../../constants/https-status";
 
 export default async function checkToken(
   request: Request, 

@@ -15,6 +15,7 @@ class OrderService {
     products: Array<Products>;
     user: User;
     token: string;
+    transactionId: string
   }): Promise<{ 
     status: number; 
     order: Order; 
@@ -31,9 +32,9 @@ class OrderService {
         user: request.user,
         status: PENDING,
       };
-      await this.validateProductStock(order, request.token);
+      await this.validateProductStock(order, request.token, request.transactionId);
       const newOrder = await OrderRepository.create(order);
-      this.sendMessage(newOrder);
+      this.sendMessage(newOrder, request.transactionId);
       return {
         status: httpStatus.SUCCESS,
         order: newOrder,
@@ -46,10 +47,11 @@ class OrderService {
     }
   }
 
-  sendMessage(order: Order): void {
+  sendMessage(order: Order, transactionId: string): void {
     const message = {
       salesId: order._id,
       products: order.products,
+      transactionId
     };
     sendMessageToProductStockUpdateQueue(message);
   }
@@ -65,11 +67,13 @@ class OrderService {
 
   async validateProductStock(
     order: { products: Array<Products> },
-    token: string
+    token: string,
+    transactionId: string
   ): Promise<void> {
     let stockIsOK = await ProductClient.checkProductStock(
       order.products,
-      token
+      token,
+      transactionId
     );
     if (!stockIsOK) {
       throw new Exception(
@@ -80,7 +84,7 @@ class OrderService {
   }
 
   async updateOrder(orderMessage: string): Promise<void> {
-    const order: { salesId: string; status: string } = JSON.parse(
+    const order: { salesId: string; status: string, transactionId: string } = JSON.parse(
       String(orderMessage)
     );
     console.log(order);
@@ -92,7 +96,7 @@ class OrderService {
           await OrderRepository.save(existingOrder);
         }
       } else {
-        console.warn("The order message was not complete.");
+        console.warn(`The order message was not complete. TransactionID: ${order.transactionId}`);
       }
     } catch (error: any) {
       console.error("Could not parse order message from queue.");

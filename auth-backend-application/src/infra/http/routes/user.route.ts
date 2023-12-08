@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import UserController from "../controllers/UserController";
-import checkToken from "@shared/config/auth/CheckToken";
+import checkToken from "@shared/infra/http/middlewares/CheckToken";
 
 const userRouter = Router();
 const userController = new UserController();

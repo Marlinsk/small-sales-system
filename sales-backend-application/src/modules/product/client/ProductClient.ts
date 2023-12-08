@@ -8,13 +8,16 @@ type Products = {
 }
 
 class ProductClient {
-  async checkProductStock(productData: Array<Products>, token: string): Promise<boolean> {
+  async checkProductStock(productData: Array<Products>, token: string, transactionId: string) {
     try {
       const headers = {
         Authorization: token,
+        transactionId
       };
       console.info(
-        `Sending request to Product API with data: ${JSON.stringify(productData)}`
+        `Sending request to Product API with data: ${
+          JSON.stringify(productData)
+        } and transactionID: ${transactionId}`
       );
       let response = false;
       await axios
@@ -24,16 +27,22 @@ class ProductClient {
           { headers }
         )
         .then((res) => {
-          console.log(res);
+          console.info(
+            `Success response from Product-API. TransactionID: ${transactionId}`
+          );
           response = true;
         })
         .catch((error: any) => {
-          console.error(error.message);
+          console.error(
+            `Error response from Product-API. TransactionID: ${transactionId}`
+          );
           response = false;
         });
       return response;
     } catch (error) {
-      return false;
+      console.error(
+        `Error response from Product-API. TransactionID: ${transactionId}`
+      );
     }
   }
 }

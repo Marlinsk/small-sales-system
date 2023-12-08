@@ -26,9 +26,20 @@ export default class UserController {
 
   async login(request: Request, response: Response): Promise<Response> {
     try {
+      const { transactionId, serviceId } =  request.headers;
+      console.info(
+        `Request to POST login with data: ${JSON.stringify(
+          request.body
+        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+      );
       const { email, password } = request.body;
       const authenticate = container.resolve(AuthenticateUser);
       const output = await authenticate.execute(email, password);
+      console.info(
+        `Response to POST login with data: ${JSON.stringify(
+          output
+        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+      );
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({

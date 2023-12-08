@@ -1,11 +1,12 @@
 import "dotenv/config";
 import "reflect-metadata";
 
-import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import express, { Request, Response, NextFunction } from "express";
 
 import Exception from "@shared/exceptions/Exception";
 import routes from "@shared/infra/http/routes";
+import tracing from "@shared/infra/http/middlewares/tracing";
 
 import { initialData } from "@infra/database/prisma/mocks/InitialData";
 
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use(routes);
 
 initialData();
+
+app.use(tracing);
 
 app.get("/api/status", (request, response) => {
   return response.status(200).json({
