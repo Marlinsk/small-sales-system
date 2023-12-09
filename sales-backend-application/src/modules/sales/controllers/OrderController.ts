@@ -10,23 +10,23 @@ class OrderController {
   async createOrder(request: Request, response: Response): Promise<Response> {
     try {
       const { authorization } = request.headers;
-      const { transactionId, serviceId } =  request.headers;
+      const { transactionid, serviceid } =  request.headers;
       const { products }: { products: Array<Products> } = request.body;
       console.info(
         `Request to POST new order with data: ${JSON.stringify(
           request.body
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       const output = await OrderService.createOrder({
         products: products,
         user: request.user,
         token: String(authorization),
-        transactionId: String(transactionId)
+        transactionid: String(transactionid)
       });
       console.info(
         `Response to POST new order with data: ${JSON.stringify(
           output
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       return response.status(output.status).json(output);
     } catch (error: any) {
@@ -40,15 +40,15 @@ class OrderController {
   async findById(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
-      const { transactionId, serviceId } =  request.headers;
+      const { transactionid, serviceid } =  request.headers;
       console.info(
-        `Request to GET order by ID: ${id} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        `Request to GET order by ID: ${id} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       const output = await OrderService.findById(id);
       console.info(
         `Request to GET order by ID: ${id}: ${JSON.stringify(
           output
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       return response.status(output.status).json(output);
     } catch (error: any) {
@@ -61,15 +61,15 @@ class OrderController {
 
   async findAll(request: Request, response: Response): Promise<Response> {
     try {
-      const { transactionId, serviceId } =  request.headers;
+      const { transactionid, serviceid } =  request.headers;
       console.info(
-        `Request to GET all orders | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        `Request to GET all orders | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       const output = await OrderService.findAll();
       console.info(
         `Request to GET all orders: ${JSON.stringify(
           output
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       return response.status(output.status).json(output);
     } catch (error: any) {
@@ -83,15 +83,15 @@ class OrderController {
   async findByProductId(request: Request, response: Response): Promise<Response> {
     try {
       const { productId } = request.params;
-      const { transactionId, serviceId } =  request.headers;
+      const { transactionid, serviceid } =  request.headers;
       console.info(
-        `Request to GET orders by productID: ${productId} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        `Request to GET orders by productID: ${productId} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       const output = await OrderService.findByProductId(productId);
       console.info(
         `Request to GET orders by productID: ${productId}: ${JSON.stringify(
           output
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
       return response.status(output.status).json(output);
     } catch (error: any) {

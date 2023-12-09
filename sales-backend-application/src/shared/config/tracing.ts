@@ -8,13 +8,13 @@ export default (
   response: Response, 
   next: NextFunction
 ) => {
-  let { transactionId } = request.headers;
-  if (!transactionId) {
+  let { transactionid } = request.headers;
+  if (transactionid === undefined) {
     return response.status(BAD_REQUEST).json({ 
       status: BAD_REQUEST, 
-      message: 'The transactionId header is required.' 
+      message: 'The transactionid header is required.' 
     });
   }
-  request.headers.serviceId = uuidv4();
+  request.headers.serviceid = uuidv4();
   return next();
 }

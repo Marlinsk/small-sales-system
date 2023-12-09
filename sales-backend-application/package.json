@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "set NODE_ENV=container&&ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main.ts",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "start:container": "set NODE_ENV=container&&node dist/main.js"
   },
   "keywords": [],
   "author": "Marlinsk",

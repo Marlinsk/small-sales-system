@@ -8,16 +8,16 @@ type Products = {
 }
 
 class ProductClient {
-  async checkProductStock(productData: Array<Products>, token: string, transactionId: string) {
+  async checkProductStock(productData: Array<Products>, token: string, transactionid: string) {
     try {
       const headers = {
         Authorization: token,
-        transactionId
+        transactionid
       };
       console.info(
         `Sending request to Product API with data: ${
           JSON.stringify(productData)
-        } and transactionID: ${transactionId}`
+        } and transactionID: ${transactionid}`
       );
       let response = false;
       await axios
@@ -28,20 +28,20 @@ class ProductClient {
         )
         .then((res) => {
           console.info(
-            `Success response from Product-API. TransactionID: ${transactionId}`
+            `Success response from Product-API. transactionID: ${transactionid}`
           );
           response = true;
         })
         .catch((error: any) => {
           console.error(
-            `Error response from Product-API. TransactionID: ${transactionId}`
+            `Error response from Product-API. transactionID: ${transactionid}`
           );
           response = false;
         });
       return response;
     } catch (error) {
       console.error(
-        `Error response from Product-API. TransactionID: ${transactionId}`
+        `Error response from Product-API. transactionID: ${transactionid}`
       );
     }
   }

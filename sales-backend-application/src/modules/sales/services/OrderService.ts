@@ -15,7 +15,7 @@ class OrderService {
     products: Array<Products>;
     user: User;
     token: string;
-    transactionId: string
+    transactionid: string
   }): Promise<{ 
     status: number; 
     order: Order; 
@@ -32,9 +32,9 @@ class OrderService {
         user: request.user,
         status: PENDING,
       };
-      await this.validateProductStock(order, request.token, request.transactionId);
+      await this.validateProductStock(order, request.token, request.transactionid);
       const newOrder = await OrderRepository.create(order);
-      this.sendMessage(newOrder, request.transactionId);
+      this.sendMessage(newOrder, request.transactionid);
       return {
         status: httpStatus.SUCCESS,
         order: newOrder,
@@ -47,11 +47,11 @@ class OrderService {
     }
   }
 
-  sendMessage(order: Order, transactionId: string): void {
+  sendMessage(order: Order, transactionid: string): void {
     const message = {
       salesId: order._id,
       products: order.products,
-      transactionId
+      transactionid
     };
     sendMessageToProductStockUpdateQueue(message);
   }
@@ -68,12 +68,12 @@ class OrderService {
   async validateProductStock(
     order: { products: Array<Products> },
     token: string,
-    transactionId: string
+    transactionid: string
   ): Promise<void> {
     let stockIsOK = await ProductClient.checkProductStock(
       order.products,
       token,
-      transactionId
+      transactionid
     );
     if (!stockIsOK) {
       throw new Exception(
@@ -84,7 +84,7 @@ class OrderService {
   }
 
   async updateOrder(orderMessage: string): Promise<void> {
-    const order: { salesId: string; status: string, transactionId: string } = JSON.parse(
+    const order: { salesId: string; status: string, transactionid: string } = JSON.parse(
       String(orderMessage)
     );
     console.log(order);
@@ -96,7 +96,7 @@ class OrderService {
           await OrderRepository.save(existingOrder);
         }
       } else {
-        console.warn(`The order message was not complete. TransactionID: ${order.transactionId}`);
+        console.warn(`The order message was not complete. transactionID: ${order.transactionid}`);
       }
     } catch (error: any) {
       console.error("Could not parse order message from queue.");
