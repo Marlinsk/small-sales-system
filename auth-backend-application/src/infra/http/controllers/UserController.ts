@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import AuthenticateUser from "@application/usecases/AuthenticateUser";
 import FindUserByEmail from "@application/usecases/FindUserByEmail";
 
-import Validations from "@shared/validations";
+import ValidationClass from "@shared/validation";
 
 import * as httpStatus from "@shared/constants/https-status";
 
@@ -28,7 +28,6 @@ export default class UserController {
           output
         )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
       );
-      console.log(output)
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
@@ -43,7 +42,7 @@ export default class UserController {
       const { user } = request;
       const { email } = request.params;
       const output = await this.findUserByEmailService.execute(email);
-      Validations.userAuthenticated(output.user, user);
+      ValidationClass.userAuthenticated(output.user, user);
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
