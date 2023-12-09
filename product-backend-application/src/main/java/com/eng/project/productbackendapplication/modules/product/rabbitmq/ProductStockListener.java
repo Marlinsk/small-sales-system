@@ -20,7 +20,7 @@ public class ProductStockListener {
     public void receiveProductStockMessage(ProductStockDTO product) throws JsonProcessingException {
         log.info("Receiving message with data: {} and TransactionID: {}",
                 new ObjectMapper().writeValueAsString(product),
-                product.getTransactionId());
+                product.getTransactionid());
         productService.updateProductStock(product);
     }
 }

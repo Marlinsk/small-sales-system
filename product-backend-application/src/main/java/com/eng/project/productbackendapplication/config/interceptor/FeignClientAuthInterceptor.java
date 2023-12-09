@@ -10,7 +10,7 @@ import static com.eng.project.productbackendapplication.config.RequestUtil.getCu
 public class FeignClientAuthInterceptor implements RequestInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";
-    private static final String TRANSACTION_ID = "transactionId";
+    private static final String TRANSACTION_ID = "transactionid";
 
     @Override
     public void apply(RequestTemplate template) {

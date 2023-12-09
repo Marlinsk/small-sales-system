@@ -15,7 +15,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";
-    private static final String TRANSACTION_ID = "transactionId";
+    private static final String TRANSACTION_ID = "transactionid";
 
     @Autowired
     private JwtService jwtService;
@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
         if (isEmpty(request.getHeader(TRANSACTION_ID))) {
-            throw new ValidationException("The transactionId header is required.");
+            throw new ValidationException("The transactionid header is required.");
         }
         var authorization = request.getHeader(AUTHORIZATION);
         jwtService.validateAuthorization(authorization);

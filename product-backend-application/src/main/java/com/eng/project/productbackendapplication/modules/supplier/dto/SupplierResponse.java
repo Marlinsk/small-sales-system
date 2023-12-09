@@ -4,8 +4,6 @@ import com.eng.project.productbackendapplication.modules.supplier.model.Supplier
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
-import java.util.Date;
-
 @Data
 public class SupplierResponse {
 

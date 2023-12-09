@@ -31,8 +31,8 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 public class ProductService {
 
     private static final Integer ZERO = 0;
-    private static final String TRANSACTION_ID = "transactionId";
-    private static final String SERVICE_ID = "serviceId";
+    private static final String TRANSACTION_ID = "transactionid";
+    private static final String SERVICE_ID = "serviceid";
 
     @Autowired
     private ProductRepository productRepository;
@@ -164,7 +164,7 @@ public class ProductService {
             updateStock(product);
         } catch (Exception exception) {
             log.error("Error while trying to update stock for message with error: {}", exception.getMessage(), exception);
-            salesConfirmationSender.sendSalesConfirmationMessage(new SalesConfirmationDTO(product.getSalesId(), SalesStatus.REJECTED, product.getTransactionId()));
+            salesConfirmationSender.sendSalesConfirmationMessage(new SalesConfirmationDTO(product.getSalesId(), SalesStatus.REJECTED, product.getTransactionid()));
         }
     }
 
@@ -193,7 +193,7 @@ public class ProductService {
         });
         if (!isEmpty(productsForUpdate)) {
             productRepository.saveAll(productsForUpdate);
-            var approvedMessage = new SalesConfirmationDTO(product.getSalesId(), SalesStatus.APPROVED, product.getTransactionId());
+            var approvedMessage = new SalesConfirmationDTO(product.getSalesId(), SalesStatus.APPROVED, product.getTransactionid());
             salesConfirmationSender.sendSalesConfirmationMessage(approvedMessage);
         }
     }
