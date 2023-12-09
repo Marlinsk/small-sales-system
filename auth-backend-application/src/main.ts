@@ -6,9 +6,10 @@ import express, { Request, Response, NextFunction } from "express";
 import Exception from "@shared/exceptions/Exception";
 import tracing from "@shared/middlewares/tracing";
 
-import { initialData } from "@infra/database/mocks/InitialData";
-import { CONTAINER_ENV, PORT } from "@shared/constants/secret";
+import { PORT } from "@shared/constants/secret";
+import { CONTAINER_ENV } from "@shared/constants";
 
+import { initialData } from "@infra/database/mocks/InitialData";
 import userRouter from "@infra/http/routes/user.route";
 
 const app = express();
