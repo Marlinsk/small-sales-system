@@ -1,20 +1,34 @@
 import { Request, Response } from "express";
-import { container } from "tsyringe";
 
 import AuthenticateUser from "@application/usecases/AuthenticateUser";
 import FindUserByEmail from "@application/usecases/FindUserByEmail";
+
 import Validations from "@shared/validations";
+
 import * as httpStatus from "@shared/constants/https-status";
 
 export default class UserController {
-  async getUserProfileByEmail(request: Request, response: Response): Promise<Response> {
+  constructor(
+    readonly authenticateUserService: AuthenticateUser,
+    readonly findUserByEmailService: FindUserByEmail, 
+  ) {}
+  
+  async login(request: Request, response: Response): Promise<Response> {
     try {
-      const { user } = request;
-      const { email } = request.params;
-      const validate = container.resolve(Validations);
-      const findUserByEmail = container.resolve(FindUserByEmail);
-      const output = await findUserByEmail.execute(email);
-      validate.userAuthenticated(output.user, user);
+      const { transactionid, serviceid } =  request.headers;
+      console.info(
+        `Request to POST login with data: ${JSON.stringify(
+          request.body
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
+      );
+      const { email, password } = request.body;
+      const output = await this.authenticateUserService.execute(email, password);
+      console.info(
+        `Response to POST login with data: ${JSON.stringify(
+          output
+        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
+      );
+      console.log(output)
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({
@@ -24,22 +38,12 @@ export default class UserController {
     }
   }
 
-  async login(request: Request, response: Response): Promise<Response> {
+  async getUserProfileByEmail(request: Request, response: Response): Promise<Response> {
     try {
-      const { transactionId, serviceId } =  request.headers;
-      console.info(
-        `Request to POST login with data: ${JSON.stringify(
-          request.body
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
-      );
-      const { email, password } = request.body;
-      const authenticate = container.resolve(AuthenticateUser);
-      const output = await authenticate.execute(email, password);
-      console.info(
-        `Response to POST login with data: ${JSON.stringify(
-          output
-        )} | [transactionID: ${transactionId} | serviceID: ${serviceId}]`
-      );
+      const { user } = request;
+      const { email } = request.params;
+      const output = await this.findUserByEmailService.execute(email);
+      Validations.userAuthenticated(output.user, user);
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({

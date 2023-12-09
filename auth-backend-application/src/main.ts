@@ -1,26 +1,28 @@
 import "dotenv/config";
-import "reflect-metadata";
 
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 
 import Exception from "@shared/exceptions/Exception";
-import routes from "@shared/infra/http/routes";
-import tracing from "@shared/infra/http/middlewares/tracing";
+import tracing from "@shared/middlewares/tracing";
 
-import { initialData } from "@infra/database/prisma/mocks/InitialData";
+import { initialData } from "@infra/database/mocks/InitialData";
+import { CONTAINER_ENV, PORT } from "@shared/constants/secret";
 
-import "@shared/container";
+import userRouter from "@infra/http/routes/user.route";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(routes);
 
-initialData();
+function startApplication() {
+  if (process.env.NODE_ENV === CONTAINER_ENV) {
+    initialData();
+  }
+}
 
-app.use(tracing);
+startApplication();
 
 app.get("/api/status", (request, response) => {
   return response.status(200).json({
@@ -50,7 +52,10 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     });
 });
 
-app.listen(8080, () => {
+app.use(tracing);
+app.use(userRouter);
+
+app.listen(PORT, () => {
   console.log(
     `Server starting successfully at 🚀 http://localhost:${8080}`
   );

@@ -1,9 +1,7 @@
-import { injectable, inject } from "tsyringe";
-
 import UserRepository from "../repositories/UserRepository";
-import Exception from "../../shared/exceptions/Exception";
+import Exception from "@shared/exceptions/Exception";
 
-import * as httpStatus from "../../shared/constants/https-status";
+import * as httpStatus from "@shared/constants/https-status";
 
 type Response = {
   status: number;
@@ -14,17 +12,13 @@ type Response = {
   }
 }
 
-@injectable()
 export default class FindUserByEmail {
-  constructor(
-    @inject("UserRepository")
-    readonly userRepository: UserRepository
-  ) {}
+  constructor(readonly userRepository: UserRepository) {}
 
   async execute(email: string): Promise<Response> {
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user) {
+    if (user === null) {
       throw new Exception(
         `Not exist user with email ${email}`, 
         httpStatus.NOT_FOUND

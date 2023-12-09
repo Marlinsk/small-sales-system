@@ -12,7 +12,7 @@ type AuthUserCredential = {
 }
 
 export default class Validations {
-  userAuthenticated(user: User, authUser: AuthUserCredential) {
+  static userAuthenticated(user: User, authUser: AuthUserCredential) {
     if (!authUser || String(user.id) != authUser.id) {
       throw new Exception(
         "You cannot see this data",
