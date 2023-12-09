@@ -3,17 +3,8 @@ import Exception from "@shared/exceptions/Exception";
 
 import * as httpStatus from "@shared/constants/https-status";
 
-type Response = {
-  status: number;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-  }
-}
-
 export default class FindUserByEmail {
-  constructor(readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async execute(email: string): Promise<{
     status: number;

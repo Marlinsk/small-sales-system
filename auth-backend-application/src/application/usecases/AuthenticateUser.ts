@@ -9,7 +9,7 @@ import * as secret from "@shared/constants/secret";
 import * as httpStatus from "@shared/constants/https-status";
 
 export default class AuthenticateUser {
-  constructor(readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
   
   async execute(email: string, password: string): Promise<{
     status: number;

@@ -9,8 +9,8 @@ import * as httpStatus from "@shared/constants/https-status";
 
 export default class UserController {
   constructor(
-    readonly authenticateUserService: AuthenticateUser,
-    readonly findUserByEmailService: FindUserByEmail, 
+    private readonly authenticateUserService: AuthenticateUser,
+    private readonly findUserByEmailService: FindUserByEmail, 
   ) {}
   
   async login(request: Request, response: Response): Promise<Response> {
