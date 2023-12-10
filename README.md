@@ -65,7 +65,7 @@ The Product-API application is composed of three modules, each hosting multiple 
 
 Conversely, the Sales-API application is streamlined with just four endpoints.
 
-### 🚏 HTTP routes 
+### HTTP routes 
 **Note:** In some projects, data is generated during the initialization execution.
 
 #### Auth-API
@@ -99,7 +99,6 @@ Response:
 Provide the email of the authenticated user in the parameters, and then make the request.
 
 > /api/user/email/:email
-
 
 ## Logs and Tracing
 All endpoints require a header named **transactionid** as it will represent the ID that will traverse the entire request within the service. In case this application calls other microservices, this **transactionid** will be forwarded. All input and output endpoints will log the input data (JSON or parameters) and the **transactionid**.
