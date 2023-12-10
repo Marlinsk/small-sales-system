@@ -78,8 +78,7 @@ Validates user credentials and generates the user authentication token on the pl
 
 > /api/user/auth
 
-
-Body json:
+Body:
 ```bash
 {
     "email": "haroldstriker@outlook.com",
@@ -87,7 +86,7 @@ Body json:
 }
 ```
 
-Response:
+Response example:
 ```bash
 {
     "status": 200,
@@ -101,7 +100,92 @@ Provide the email of the authenticated user in the parameters, and then make the
 
 > /api/user/email/:email
 
-**Note:** todos os endpoints dos serviços Product-API e Sales-API precisam do header de autorização e transactionid:
+### Product-API
+Base URL: http://localhost:8081
+
+### Product Module
+
+**POST** Create a new product
+
+To create a product, it is necessary to provide the category ID, supplier ID, product name, and quantity.
+
+> /api/product
+
+Body:
+```bash
+{
+    "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
+    "quantity_available": 3,
+    "supplierId": 1001,
+    "categoryId": 1001
+}
+```
+
+Response:
+```bash
+{
+    "id": 1,
+    "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
+    "supplier": {
+        "id": 1001,
+        "name": "Intel"
+    },
+    "category": {
+        "id": 1001,
+        "description": "Hardware"
+    },
+    "quantity_available": 3,
+    "created_at": "09/12/2023 16:05:43"
+    "updated_at": "09/12/2023 16:05:43"
+}
+```
+
+**PUT** Update a product
+
+Include the product ID in the URL parameters of the request, and change the body.
+
+> /api/product/{id}
+
+Body:
+```bash
+{
+    "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
+    "quantity_available": 3,
+    "supplierId": 1001,
+    "categoryId": 1001
+}
+```
+
+Response:
+```bash
+{
+    "id": 1,
+    "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
+    "supplier": {
+        "id": 1001,
+        "name": "Intel"
+    },
+    "category": {
+        "id": 1001,
+        "description": "Hardware"
+    },
+    "quantity_available": 7,
+    "created_at": "09/12/2023 16:05:43"
+    "updated_at": "09/12/2023 16:08:48"
+}
+```
+
+**DELETE** Remove a product by id
+
+Include the product ID in the URL parameters of the request.
+
+Response
+```bash
+{
+    "status": 200,
+    "message": "The product was deleted."
+}
+```
 
 ## Logs and Tracing
 All endpoints require a header named **transactionid** as it will represent the ID that will traverse the entire request within the service. In case this application calls other microservices, this **transactionid** will be forwarded. All input and output endpoints will log the input data (JSON or parameters) and the **transactionid**.
