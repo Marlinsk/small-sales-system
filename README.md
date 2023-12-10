@@ -121,10 +121,10 @@ Body:
 }
 ```
 
-Response:
+Response (params.id = 1004):
 ```bash
 {
-    "id": 1,
+    "id": 1004,
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
     "supplier": {
         "id": 1001,
@@ -179,11 +179,285 @@ Response:
 
 Include the product ID in the URL parameters of the request.
 
-Response
+> /api/product/{id}
+
+Response (params.id = 1002):
 ```bash
 {
     "status": 200,
     "message": "The product was deleted."
+}
+```
+
+**GET** Get all products
+
+Retrieve all products that are stored in the database.
+
+> /api/product
+
+Response:
+```bash
+[
+    {
+        "id": 1001,
+        "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 5,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    },
+    {
+        "id": 1002,
+        "name": "Processador Intel Core i9-11900K, 11ª Geração, 3.5 GHz (5.1GHz Turbo), Cache 16MB, Octa Core, LGA1200, Vídeo Integrado - BX8070811900K",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 3,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    },
+    {
+        "id": 1003,
+        "name": "Processador Intel Core i9-12900F, 12ª Geração, Cache 30MB, 2.4GHz (5.1GHz Max Turbo), LGA 1700 - BX8071512900F",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 4,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    }
+]
+```
+
+**GET** Get product by ID
+
+Include the product ID in the URL parameters of the request.
+
+> /api/product/{id}
+
+Response (params.id = 1001):
+```bash
+{
+        "id": 1001,
+        "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 5,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    }
+```
+
+**GET** Get products by name (without case sensitive)
+
+Include the product name in the URL parameters of the request.
+
+> /api/product/name/{name}
+
+Response (params.name = "Pro")
+```bash
+[
+  {
+        "id": 1001,
+        "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 5,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    },
+    {
+        "id": 1002,
+        "name": "Processador Intel Core i9-11900K, 11ª Geração, 3.5 GHz (5.1GHz Turbo), Cache 16MB, Octa Core, LGA1200, Vídeo Integrado - BX8070811900K",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 3,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    }
+]
+```
+
+**GET** Get products by category ID:
+
+Include the category ID in the URL parameters of the request.
+
+> /api/product/category/{categoryId}
+
+Response (params.categoryId = 1001)
+```bash
+[
+  {
+        "id": 1001,
+        "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 5,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    },
+    {
+        "id": 1002,
+        "name": "Processador Intel Core i9-11900K, 11ª Geração, 3.5 GHz (5.1GHz Turbo), Cache 16MB, Octa Core, LGA1200, Vídeo Integrado - BX8070811900K",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 3,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    },
+    {
+        "id": 1003,
+        "name": "Processador Intel Core i9-12900F, 12ª Geração, Cache 30MB, 2.4GHz (5.1GHz Max Turbo), LGA 1700 - BX8071512900F",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1001,
+            "name": "Intel"
+        },
+        "quantity_available": 4,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    }
+]
+```
+
+**GET** Get products by supplier ID:
+
+Include the supplier ID in the URL parameters of the request.
+
+>  /api/product/supplier/{supplierId}
+
+Response (params.supplierId = 1006)
+```bash
+[
+    {
+        "id": 1008,
+        "name": "Placa de Vídeo RTX 4060 1-Click OC 1X Galax NVIDIA GeForce, 8GB GDDR6, DLSS, Ray Trancing, G-Sync",
+        "category": {
+            "id": 1001,
+            "description": "Hardware"
+        },
+        "supplier": {
+            "id": 1006,
+            "name": "Galax"
+        },
+        "quantity_available": 6,
+        "created_at": "10/12/2023 19:24:23",
+        "updated_at": "10/12/2023 19:24:23"
+    }
+]
+```
+
+**POST** Check product quantity availabel:
+
+Check if the provided quantity is compatible with the availability.
+
+> /api/product/check-stock
+
+Body:
+```bash
+{
+    "products": [
+        {
+            "productId": 1001,
+            "quantity": 1
+        },
+        {
+            "productId": 1002,
+            "quantity": 1
+        },
+        {
+            "productId": 1003,
+            "quantity": 1
+        }
+    ]
+}
+```
+
+Response:
+```bash
+{
+    "status": 200,
+    "message": "The stock is ok!"
+}
+```
+
+**GET** List product sales ID
+
+Retrieve the product along with all the IDs of the orders placed for it.
+
+> /api/product/{productId}/sales
+
+Response:
+```bash
+{
+    "id": 1001,
+    "name": "Graphics Card Gigabyte NVIDIA GeForce GTX 1650 D6 OC 4G, 4GB GDDR6, REV 4.0 - GV-N1656OC-4GD 4.0",
+    "supplier": {
+        "id": 1005,
+        "name": "GigaByte"
+    },
+    "category": {
+        "id": 1000,
+        "description": "Hardware"
+    },
+    "sales": [
+        "6161cd32560fbede60d48efc",
+        "6161cd32560fbede60d48efe",
+        "6161d007560fbede60d48f01"
+    ],
+    "quantity_available": 3,
+    "created_at": "09/12/2023 14:11:15"
+    "updated_at": "09/12/2023 14:11:15"
 }
 ```
 
