@@ -28,7 +28,7 @@ The applications of this project use:
 The project was developed following the architecture below:
 
 <p align="center">
-  <img alt="architecture" src="assets/Architecture.drawio.png" width="100%">
+  <img alt="architecture" src="assets/Architecture.drawio.png"/>
 </p>
 
 ## In-depth description of the application
