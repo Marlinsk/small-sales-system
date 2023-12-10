@@ -103,7 +103,7 @@ Provide the email of the authenticated user in the parameters, and then make the
 ### Product-API
 Base URL: http://localhost:8081
 
-### Product Module
+#### Product Module
 
 **POST** Create a new product
 
