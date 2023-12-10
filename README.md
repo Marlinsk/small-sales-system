@@ -27,7 +27,9 @@ The applications of this project use:
 ### Architecture
 The project was developed following the architecture below:
 
-"Image here coming soon!"
+<p align="center">
+  <img alt="architecture" src="assets/Architecture.drawio.png" width="100%">
+</p>
 
 ### Order Execution Flow
 The flow for placing an order will depend on both synchronous communications (HTTP calls via REST) and asynchronous messaging with RabbitMQ.
