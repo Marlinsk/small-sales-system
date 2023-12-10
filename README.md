@@ -15,9 +15,9 @@ The applications of this project use:
 - Express.js
 - Babel (Build generator)
 - Sequelize (Object-Relational Mapping)
-- MongoDB (Container e Cloud MongoDB)
-- PostgreSQL (Container)
-- RabbitMQ (Container)
+- MongoDB
+- PostgreSQL
+- RabbitMQ 
 - API REST
 - Docker
 - docker-compose
