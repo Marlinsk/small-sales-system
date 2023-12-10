@@ -41,7 +41,7 @@ The **Product API** is responsible for product management, while the **Sales API
 - **Sales-API:** Sales API with Node.js 19, Express.js, Typescript, MongoDB, Mongoose, Babel, JWT validation, RabbitMQ, and Axios for HTTP clients.
 - **Product-API:** Product API with Java 17, Spring Boot, Spring Data JPA, PostgreSQL, JWT validation, RabbitMQ, and Spring Cloud OpenFeign for HTTP clients.
 
-## Order Execution Flow
+### Order Execution Flow
 The flow for placing an order will depend on both synchronous communications (HTTP calls via REST) and asynchronous messaging with **RabbitMQ.**
 
 The flow is described below:
