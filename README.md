@@ -58,6 +58,49 @@ The flow is described below:
 * 10 - If there is an issue with the update, the Products API will publish a message on the sales confirmation queue with a status of REJECTED.
 * 11 - Finally, the Orders API will receive the confirmation message and update the order with the status returned in the message.
 
+## Endpoints description
+The Auth-API application features a single endpoint dedicated to authentication.
+
+The Product-API application is composed of three modules, each hosting multiple endpoints catering to products, categories, and suppliers.
+
+Conversely, the Sales-API application is streamlined with just four endpoints.
+
+### 🚏 HTTP routes 
+**Note:** In some projects, data is generated during the initialization execution.
+
+#### Auth-API
+Base URL: http://localhost:8080
+
+**POST** Performs user login:
+
+Validates user credentials and generates the user authentication token on the platform.
+
+> /api/user/auth
+
+
+Body json:
+```bash
+{
+    "email": "haroldstriker@outlook.com",
+    "password": "123456pipboy"
+}
+```
+
+Response:
+```bash
+{
+    "status": 200,
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVXNlciI6eyJpZCI6MSwibmFtZSI6IlVzZXIgVGVzdCAxIiwiZW1haWwiOiJ0ZXN0ZXVzZXIxQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MzM3OTk5MzUsImV4cCI6MTYzMzg4NjMzNX0.2AWPeoHSYUW_nGeLsx6rEOhm99ZfNZ8pQXPTJ0fwbDU"
+}
+```
+
+**GET** Displays the email of the authenticated user:
+
+Provide the email of the authenticated user in the parameters, and then make the request.
+
+> /api/user/email/:email
+
+
 ## Logs and Tracing
 All endpoints require a header named **transactionid** as it will represent the ID that will traverse the entire request within the service. In case this application calls other microservices, this **transactionid** will be forwarded. All input and output endpoints will log the input data (JSON or parameters) and the **transactionid**.
 
