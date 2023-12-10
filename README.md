@@ -24,15 +24,25 @@ The applications of this project use:
 - JWT
 - Axios
 
-### Architecture
+## Architecture
 The project was developed following the architecture below:
 
 <p align="center">
   <img alt="architecture" src="assets/Architecture.drawio.png" width="100%">
 </p>
 
-### Order Execution Flow
-The flow for placing an order will depend on both synchronous communications (HTTP calls via REST) and asynchronous messaging with RabbitMQ.
+## In-depth description of the application
+The applications communicate with each other to execute the authentication validation process and update the status of a product sales order in the database. Much of this communication takes place between the **Product API** and **Sales API,** which complement each other. 
+
+The **Product API** is responsible for product management, while the **Sales API** handles order placement.
+
+### Tech descripiton of applications
+- **Auth-API:** Authentication API with Node.js 19, Express.js, Typescript, Sequelize, PostgreSQL, JWT, Bcryptjs, Babel.
+- **Sales-API:** Sales API with Node.js 19, Express.js, Typescript, MongoDB, Mongoose, Babel, JWT validation, RabbitMQ, and Axios for HTTP clients.
+- **Product-API:** Product API with Java 17, Spring Boot, Spring Data JPA, PostgreSQL, JWT validation, RabbitMQ, and Spring Cloud OpenFeign for HTTP clients.
+
+## Order Execution Flow
+The flow for placing an order will depend on both synchronous communications (HTTP calls via REST) and asynchronous messaging with **RabbitMQ.**
 
 The flow is described below:
 
