@@ -15,19 +15,8 @@ export default class UserController {
   
   async login(request: Request, response: Response): Promise<Response> {
     try {
-      const { transactionid, serviceid } =  request.headers;
-      console.info(
-        `Request to POST login with data: ${JSON.stringify(
-          request.body
-        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
-      );
       const { email, password } = request.body;
       const output = await this.authenticateUserService.execute(email, password);
-      console.info(
-        `Response to POST login with data: ${JSON.stringify(
-          output
-        )} | [transactionID: ${transactionid} | serviceID: ${serviceid}]`
-      );
       return response.status(output.status).json(output);
     } catch (error: any) {
       return response.json({

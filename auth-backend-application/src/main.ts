@@ -4,7 +4,6 @@ import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 
 import Exception from "@shared/exceptions/Exception";
-import tracing from "@shared/middlewares/tracing";
 
 import { PORT } from "@shared/constants/secret";
 import { CONTAINER_ENV } from "@shared/constants";
@@ -53,7 +52,6 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     });
 });
 
-app.use(tracing);
 app.use(userRouter);
 
 app.listen(PORT, () => {
