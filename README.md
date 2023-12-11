@@ -79,7 +79,7 @@ Validates user credentials and generates the user authentication token on the pl
 > /api/user/auth
 
 Body:
-```bash
+```json
 {
     "email": "haroldstriker@outlook.com",
     "password": "123456pipboy"
@@ -87,7 +87,7 @@ Body:
 ```
 
 Response example:
-```bash
+```json
 {
     "status": 200,
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVXNlciI6eyJpZCI6MSwibmFtZSI6IlVzZXIgVGVzdCAxIiwiZW1haWwiOiJ0ZXN0ZXVzZXIxQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MzM3OTk5MzUsImV4cCI6MTYzMzg4NjMzNX0.2AWPeoHSYUW_nGeLsx6rEOhm99ZfNZ8pQXPTJ0fwbDU"
@@ -112,7 +112,7 @@ To create a product, it is necessary to provide the category ID, supplier ID, pr
 > /api/product
 
 Body:
-```bash
+```json
 {
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
     "quantity_available": 3,
@@ -122,7 +122,7 @@ Body:
 ```
 
 Response (params.id = 1004):
-```bash
+```json
 {
     "id": 1004,
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
@@ -147,7 +147,7 @@ Include the product ID in the URL parameters of the request, and change the body
 > /api/product/{id}
 
 Body:
-```bash
+```json
 {
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
     "quantity_available": 3,
@@ -157,7 +157,7 @@ Body:
 ```
 
 Response:
-```bash
+```json
 {
     "id": 1,
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
@@ -182,7 +182,7 @@ Include the product ID in the URL parameters of the request.
 > /api/product/{id}
 
 Response (params.id = 1002):
-```bash
+```json
 {
     "status": 200,
     "message": "The product was deleted."
@@ -196,7 +196,7 @@ Retrieve all products that are stored in the database.
 > /api/product
 
 Response:
-```bash
+```json
 [
     {
         "id": 1001,
@@ -253,7 +253,7 @@ Include the product ID in the URL parameters of the request.
 > /api/product/{id}
 
 Response (params.id = 1001):
-```bash
+```json
 {
         "id": 1001,
         "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
@@ -278,7 +278,7 @@ Include the product name in the URL parameters of the request.
 > /api/product/name/{name}
 
 Response (params.name = "Pro")
-```bash
+```json
 [
   {
         "id": 1001,
@@ -320,7 +320,7 @@ Include the category ID in the URL parameters of the request.
 > /api/product/category/{categoryId}
 
 Response (params.categoryId = 1001)
-```bash
+```json
 [
   {
         "id": 1001,
@@ -377,7 +377,7 @@ Include the supplier ID in the URL parameters of the request.
 >  /api/product/supplier/{supplierId}
 
 Response (params.supplierId = 1006)
-```bash
+```json
 [
     {
         "id": 1008,
@@ -404,7 +404,7 @@ Check if the provided quantity is compatible with the availability.
 > /api/product/check-stock
 
 Body:
-```bash
+```json
 {
     "products": [
         {
@@ -424,7 +424,7 @@ Body:
 ```
 
 Response:
-```bash
+```json
 {
     "status": 200,
     "message": "The stock is ok!"
@@ -438,7 +438,7 @@ Retrieve the product along with all the IDs of the orders placed for it.
 > /api/product/{productId}/sales
 
 Response:
-```bash
+```json
 {
     "id": 1001,
     "name": "Graphics Card Gigabyte NVIDIA GeForce GTX 1650 D6 OC 4G, 4GB GDDR6, REV 4.0 - GV-N1656OC-4GD 4.0",
@@ -459,6 +459,124 @@ Response:
     "created_at": "09/12/2023 14:11:15"
     "updated_at": "09/12/2023 14:11:15"
 }
+```
+
+### Supplier module
+
+**POST** Create a new supplier
+
+> /api/supplier
+
+Body
+```json
+{
+    "name": "Amazon"
+}
+```
+
+Response:
+
+```json
+{
+    "id": 1,
+    "name": "Amazon"
+}
+```
+
+**PUT** Update supplier BY ID
+
+Include the supplier ID in the URL parameters of the request.
+
+> /api/supplier/{id}
+
+Body:
+```json
+{
+    "name": "Amazon BR"
+}
+```
+
+Response:
+```json
+{
+    "id": 1,
+    "name": "Amazon BR"
+}
+```
+
+**DELETE** Delete supplier by ID
+
+Include the supplier ID in the URL parameters of the request.
+
+> /api/supplier/{id}
+
+Response:
+```json
+{
+    "status": 200,
+    "message": "The supplier was deleted."
+}
+```
+
+**GET** Get all supplier
+
+Retrieve all supplier that are stored in the database.
+
+> /api/supplier
+
+Response:
+```json
+[
+    {
+        "id": 1001,
+        "name": "Intel"
+    },
+    {
+        "id": 1002,
+        "name": "AMD"
+    },
+    {
+        "id": 1003,
+        "name": "NVIDIA"
+    },
+    {
+        "id": 1004,
+        "name": "ASUS"
+    },
+    {
+        "id": 1005,
+        "name": "GigaByte"
+    }
+]
+```
+
+**GET** Get supplier by ID
+
+> /api/supplier/{id} 
+
+Response (params.id = 1004): 
+
+```json
+{
+    "id": 1004,
+    "name": "ASUS"
+}
+```
+
+**GET** Get supplier by name
+
+Include the supplier name in the URL parameters of the request.
+
+> /api/supplier/name/{name}
+
+Response (params.name = ASUS): 
+```json
+[
+    {
+    "id": 1004,
+    "name": "ASUS"
+}
+]
 ```
 
 ## Logs and Tracing
