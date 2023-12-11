@@ -79,6 +79,7 @@ Validates user credentials and generates the user authentication token on the pl
 > /api/user/auth
 
 Body:
+
 ```json
 {
     "email": "haroldstriker@outlook.com",
@@ -87,6 +88,7 @@ Body:
 ```
 
 Response example:
+
 ```json
 {
     "status": 200,
@@ -112,6 +114,7 @@ To create a product, it is necessary to provide the category ID, supplier ID, pr
 > /api/product
 
 Body:
+
 ```json
 {
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
@@ -122,6 +125,7 @@ Body:
 ```
 
 Response (params.id = 1004):
+
 ```json
 {
     "id": 1004,
@@ -147,6 +151,7 @@ Include the product ID in the URL parameters of the request, and change the body
 > /api/product/{id}
 
 Body:
+
 ```json
 {
     "name": "Processor Intel Core i9-13900K, 13th Generation, 5.8GHz Max Turbo, 36MB Cache, 24 Cores, LGA 1700, Integrated Graphics - BX8071513900K",
@@ -157,6 +162,7 @@ Body:
 ```
 
 Response:
+
 ```json
 {
     "id": 1,
@@ -182,6 +188,7 @@ Include the product ID in the URL parameters of the request.
 > /api/product/{id}
 
 Response (params.id = 1002):
+
 ```json
 {
     "status": 200,
@@ -196,6 +203,7 @@ Retrieve all products that are stored in the database.
 > /api/product
 
 Response:
+
 ```json
 [
     {
@@ -253,6 +261,7 @@ Include the product ID in the URL parameters of the request.
 > /api/product/{id}
 
 Response (params.id = 1001):
+
 ```json
 {
     "id": 1001,
@@ -277,7 +286,8 @@ Include the product name in the URL parameters of the request.
 
 > /api/product/name/{name}
 
-Response (params.name = "Pro")
+Response (params.name = "Pro"):
+
 ```json
 [
     {
@@ -319,7 +329,8 @@ Include the category ID in the URL parameters of the request.
 
 > /api/product/category/{categoryId}
 
-Response (params.categoryId = 1001)
+Response (params.categoryId = 1001):
+
 ```json
 [
     {
@@ -376,7 +387,8 @@ Include the supplier ID in the URL parameters of the request.
 
 >  /api/product/supplier/{supplierId}
 
-Response (params.supplierId = 1006)
+Response (params.supplierId = 1006):
+
 ```json
 [
     {
@@ -404,6 +416,7 @@ Check if the provided quantity is compatible with the availability.
 > /api/product/check-stock
 
 Body:
+
 ```json
 {
     "products": [
@@ -424,6 +437,7 @@ Body:
 ```
 
 Response:
+
 ```json
 {
     "status": 200,
@@ -438,6 +452,7 @@ Retrieve the product along with all the IDs of the orders placed for it.
 > /api/product/{productId}/sales
 
 Response:
+
 ```json
 {
     "id": 1001,
@@ -467,7 +482,8 @@ Response:
 
 > /api/supplier
 
-Body
+Body:
+
 ```json
 {
     "name": "Amazon"
@@ -490,6 +506,7 @@ Include the supplier ID in the URL parameters of the request.
 > /api/supplier/{id}
 
 Body:
+
 ```json
 {
     "name": "Amazon BR"
@@ -497,6 +514,7 @@ Body:
 ```
 
 Response:
+
 ```json
 {
     "id": 1,
@@ -511,6 +529,7 @@ Include the supplier ID in the URL parameters of the request.
 > /api/supplier/{id}
 
 Response:
+
 ```json
 {
     "status": 200,
@@ -525,6 +544,7 @@ Retrieve all supplier that are stored in the database.
 > /api/supplier
 
 Response:
+
 ```json
 [
     {
@@ -570,6 +590,7 @@ Include the suppliers name in the URL parameters of the request.
 > /api/supplier/name/{name}
 
 Response (params.name = ASUS): 
+
 ```json
 [
   {
@@ -585,7 +606,8 @@ Response (params.name = ASUS):
 
 > /api/category
 
-Body
+Body:
+
 ```json
 {
    "description": "Games"
@@ -608,6 +630,7 @@ Include the category ID in the URL parameters of the request.
 > /api/category/{id}
 
 Body:
+
 ```json
 {
    "name": "Monitor"
@@ -615,6 +638,7 @@ Body:
 ```
 
 Response:
+
 ```json
 {
    "id": 1,
@@ -629,6 +653,7 @@ Include the category ID in the URL parameters of the request.
 > /api/category/{id}
 
 Response:
+
 ```json
 {
    "status": 200,
@@ -643,6 +668,7 @@ Retrieve all categories that are stored in the database.
 > /api/category
 
 Response:
+
 ```json
 [
   {
@@ -672,6 +698,7 @@ Include the category name in the URL parameters of the request.
 > /api/category/name/{name}
 
 Response (params.name = "Hardware"): 
+
 ```json
 [
   {
@@ -689,6 +716,7 @@ Base URL: http://localhost:8082
 > /api/order/create
 
 Body:
+
 ```json
 {
   "products": [
@@ -709,6 +737,7 @@ Body:
 ```
 
 Response:
+
 ```json
 {
     "status": 200,
@@ -748,6 +777,7 @@ Retrieve all orders that are stored in the database.
 > /api/order
 
 Response:
+
 ```json
 {
     "status": 200,
@@ -814,7 +844,8 @@ Include the order ID in the URL parameters of the request.
 
 > /api/order/{id}
 
-Response (params.id = "6576652991f50cf8744b0fef")
+Response (params.id = "6576652991f50cf8744b0fef"):
+
 ```json
 {
     "status": 200,
@@ -854,6 +885,7 @@ Retrieve all orders ID for a product.
 > /api/orders/products/{productId}
 
 Response (params.id = 1018):
+
 ```json
 {
     "status": 200,
