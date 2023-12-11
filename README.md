@@ -90,7 +90,7 @@ Response example:
 ```json
 {
     "status": 200,
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVXNlciI6eyJpZCI6MSwibmFtZSI6IlVzZXIgVGVzdCAxIiwiZW1haWwiOiJ0ZXN0ZXVzZXIxQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MzM3OTk5MzUsImV4cCI6MTYzMzg4NjMzNX0.2AWPeoHSYUW_nGeLsx6rEOhm99ZfNZ8pQXPTJ0fwbDU"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVXNlciI6eyJpZCI6MSwibmFtZSI6Ikhhcm9sZCBTdHJpa2VyIiwiZW1haWwiOiJoYXJvbGRzdHJpa2VyQG91dGxvb2suY29tIn0sImlhdCI6MTcwMjI1MjQxNywiZXhwIjoxNzAyMzM4ODE3LCJzdWIiOiIxIn0.rjwc7BEwXcIQqe7vQ-QUqiOT7kAp7CbLIjKwLE_-O_o"
 }
 ```
 
@@ -255,20 +255,20 @@ Include the product ID in the URL parameters of the request.
 Response (params.id = 1001):
 ```json
 {
+    "id": 1001,
+    "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
+    "category": {
         "id": 1001,
-        "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
-        "category": {
-            "id": 1001,
-            "description": "Hardware"
-        },
-        "supplier": {
-            "id": 1001,
-            "name": "Intel"
-        },
-        "quantity_available": 5,
-        "created_at": "10/12/2023 19:24:23",
-        "updated_at": "10/12/2023 19:24:23"
-    }
+        "description": "Hardware"
+    },
+    "supplier": {
+        "id": 1001,
+        "name": "Intel"
+    },
+    "quantity_available": 5,
+    "created_at": "10/12/2023 19:24:23",
+    "updated_at": "10/12/2023 19:24:23"
+}
 ```
 
 **GET** Get products by name (without case sensitive)
@@ -280,7 +280,7 @@ Include the product name in the URL parameters of the request.
 Response (params.name = "Pro")
 ```json
 [
-  {
+    {
         "id": 1001,
         "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
         "category": {
@@ -322,7 +322,7 @@ Include the category ID in the URL parameters of the request.
 Response (params.categoryId = 1001)
 ```json
 [
-  {
+    {
         "id": 1001,
         "name": "Processador Intel Core i7-10700KF, 10ª Geração, 3.8GHz (5.1GHz Max Turbo), Cache 16MB, LGA 1200 - BX8070110700KF",
         "category": {
@@ -483,7 +483,7 @@ Response:
 }
 ```
 
-**PUT** Update supplier BY ID
+**PUT** Update supplier by ID
 
 Include the supplier ID in the URL parameters of the request.
 
@@ -558,24 +558,126 @@ Response (params.id = 1004):
 
 ```json
 {
-    "id": 1004,
-    "name": "ASUS"
+   "id": 1004,
+   "name": "ASUS"
 }
 ```
 
 **GET** Get supplier by name
 
-Include the supplier name in the URL parameters of the request.
+Include the suppliers name in the URL parameters of the request.
 
 > /api/supplier/name/{name}
 
 Response (params.name = ASUS): 
 ```json
 [
-    {
-    "id": 1004,
-    "name": "ASUS"
+  {
+     "id": 1004,
+     "name": "ASUS"
+  }
+]
+```
+
+#### Category Module
+
+**POST** Create a new category
+
+> /api/category
+
+Body
+```json
+{
+   "description": "Games"
 }
+```
+
+Response:
+
+```json
+{
+   "id": 1,
+   "description": "Games"
+}
+```
+
+**PUT** Update category by ID
+
+Include the category ID in the URL parameters of the request.
+
+> /api/category/{id}
+
+Body:
+```json
+{
+   "name": "Monitor"
+}
+```
+
+Response:
+```json
+{
+   "id": 1,
+   "name": "Monitor"
+}
+```
+
+**DELETE** Delete category by ID
+
+Include the category ID in the URL parameters of the request.
+
+> /api/category/{id}
+
+Response:
+```json
+{
+   "status": 200,
+   "message": "The category was deleted."
+}
+```
+
+**GET** Get all categories
+
+Retrieve all categories that are stored in the database.
+
+> /api/category
+
+Response:
+```json
+[
+  {
+    "id": 1001,
+    "description": "Hardware"
+  }
+]
+```
+
+**GET** Get category by ID
+
+> /api/category/{id} 
+
+Response (params.id = 1001): 
+
+```json
+{
+  "id": 1001,
+  "description": "Hardware"
+}
+```
+
+**GET** Get category by name
+
+Include the category name in the URL parameters of the request.
+
+> /api/category/name/{name}
+
+Response (params.name = "Hardware"): 
+```json
+[
+  {
+     "id": 1001,
+     "name": "Hardware"
+  }
 ]
 ```
 
