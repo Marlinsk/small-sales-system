@@ -847,7 +847,7 @@ Response (params.id = "6576652991f50cf8744b0fef")
 }
 ```
 
-**GET** Get sales by product ID
+**GET** Get orders by product ID
 
 Retrieve all orders ID for a product.
 
