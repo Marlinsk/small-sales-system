@@ -461,7 +461,7 @@ Response:
 }
 ```
 
-### Supplier module
+#### Supplier module
 
 **POST** Create a new supplier
 
