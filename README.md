@@ -58,7 +58,7 @@ The flow is described below:
 * 10 - If there is an issue with the update, the Products API will publish a message on the sales confirmation queue with a status of REJECTED.
 * 11 - Finally, the Orders API will receive the confirmation message and update the order with the status returned in the message.
 
-## Cloning and running the project
+## Cloning and running the project with docker 
 **Note:** To run this project, it is necessary to have Docker installed on your machine.
 
 **1º step: clone the repository to your machine from GitHub.**
