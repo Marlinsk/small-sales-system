@@ -58,6 +58,31 @@ The flow is described below:
 * 10 - If there is an issue with the update, the Products API will publish a message on the sales confirmation queue with a status of REJECTED.
 * 11 - Finally, the Orders API will receive the confirmation message and update the order with the status returned in the message.
 
+## Cloning and running the project
+**Note:** To run this project, it is necessary to have Docker installed on your machine.
+
+**1º step: clone the repository to your machine from GitHub.**
+```bash
+git clone https://github.com/Marlinsk/small-sales-system.git
+```
+
+**2º step: Navigate to the project folder.**
+```bash
+cd small-sales-system
+```
+
+**3º step: Run this docker-compose command to build the images and start the containers.**
+```bash
+docker-compose build
+```
+
+**Run this command to execute the tasks in the background.**
+```bash
+docker-compose build -d
+```
+
+After everything is up and running, just open any request tool and play around.
+
 ## Endpoints description
 The Auth-API application features a single endpoint dedicated to authentication.
 
