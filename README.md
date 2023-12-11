@@ -681,6 +681,189 @@ Response (params.name = "Hardware"):
 ]
 ```
 
+### Sales-API
+Base URL: http://localhost:8082
+
+**POST** Create a new order
+
+> /api/order/create
+
+Body:
+```json
+{
+  "products": [
+    {
+      "productId": 1001,
+      "quantity": 1
+    },
+    {
+      "productId": 1018,
+      "quantity": 1
+    },
+    {
+      "productId": 1021,
+      "quantity": 1
+    }
+  ]
+}
+```
+
+Response:
+```json
+{
+    "status": 200,
+    "order": {
+        "_id": "6576650891f50cf8744b0fe2",
+        "products": [
+            {
+                "productId": "1001",
+                "quantity": 1,
+                "_id": "6576650891f50cf8744b0fe3"
+            },
+            {
+                "productId": "1018",
+                "quantity": 1,
+                "_id": "6576650891f50cf8744b0fe4"
+            },
+            {
+                "productId": "1021",
+                "quantity": 1,
+                "_id": "6576650891f50cf8744b0fe5"
+            }
+        ],
+        "user": {
+            "id": "1"
+        },
+        "status": "PENDING",
+        "createdAt": "2023-12-11T01:25:28.804Z",
+        "updatedAt": "2023-12-11T01:25:28.804Z"
+    }
+}
+```
+
+**GET** Get all orders
+
+Retrieve all orders that are stored in the database.
+
+> /api/order
+
+Response:
+```json
+{
+    "status": 200,
+    "orders": [
+        {
+            "_id": "6576650891f50cf8744b0fe2",
+            "products": [
+                {
+                    "productId": "1001",
+                    "quantity": 1,
+                    "_id": "6576650891f50cf8744b0fe3"
+                },
+                {
+                    "productId": "1018",
+                    "quantity": 1,
+                    "_id": "6576650891f50cf8744b0fe4"
+                },
+                {
+                    "productId": "1021",
+                    "quantity": 1,
+                    "_id": "6576650891f50cf8744b0fe5"
+                }
+            ],
+            "user": {
+                "id": "1"
+            },
+            "status": "APPROVED",
+            "createdAt": "2023-12-11T01:25:28.804Z",
+            "updatedAt": "2023-12-11T01:25:29.013Z"
+        },
+        {
+            "_id": "6576652991f50cf8744b0fef",
+            "products": [
+                {
+                    "productId": "1001",
+                    "quantity": 1,
+                    "_id": "6576652991f50cf8744b0ff0"
+                },
+                {
+                    "productId": "1018",
+                    "quantity": 1,
+                    "_id": "6576652991f50cf8744b0ff1"
+                },
+                {
+                    "productId": "1021",
+                    "quantity": 1,
+                    "_id": "6576652991f50cf8744b0ff2"
+                }
+            ],
+            "user": {
+                "id": "1"
+            },
+            "status": "APPROVED",
+            "createdAt": "2023-12-11T01:26:01.687Z",
+            "updatedAt": "2023-12-11T01:26:01.826Z"
+        }
+    ]
+}
+```
+
+**GET** Get order by ID
+
+Include the order ID in the URL parameters of the request.
+
+> /api/order/{id}
+
+Response (params.id = "6576652991f50cf8744b0fef")
+```json
+{
+    "status": 200,
+    "order": {
+        "_id": "6576652991f50cf8744b0fef",
+        "products": [
+            {
+                "productId": "1001",
+                "quantity": 1,
+                "_id": "6576652991f50cf8744b0ff0"
+            },
+            {
+                "productId": "1018",
+                "quantity": 1,
+                "_id": "6576652991f50cf8744b0ff1"
+            },
+            {
+                "productId": "1021",
+                "quantity": 1,
+                "_id": "6576652991f50cf8744b0ff2"
+            }
+        ],
+        "user": {
+            "id": "1"
+        },
+        "status": "APPROVED",
+        "createdAt": "2023-12-11T01:26:01.687Z",
+        "updatedAt": "2023-12-11T01:26:01.826Z"
+    }
+}
+```
+
+**GET** Get sales by product ID
+
+Retrieve all orders ID for a product.
+
+> /api/orders/products/{productId}
+
+Response (params.id = 1018):
+```json
+{
+    "status": 200,
+    "salesIds": [
+        "6576650891f50cf8744b0fe2",
+        "6576652991f50cf8744b0fef"
+    ]
+}
+```
+
 ## Logs and Tracing
 All endpoints require a header named **transactionid** as it will represent the ID that will traverse the entire request within the service. In case this application calls other microservices, this **transactionid** will be forwarded. All input and output endpoints will log the input data (JSON or parameters) and the **transactionid**.
 
